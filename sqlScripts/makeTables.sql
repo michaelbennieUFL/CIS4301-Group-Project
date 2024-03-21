@@ -4,7 +4,7 @@ CREATE TABLE Accident (
     Severity NUMBER(1)
         CONSTRAINT chk_Severity CHECK (Severity BETWEEN 1 AND 4) NOT NULL,
     DistanceAffected NUMBER(5,2) NOT NULL,
-    Description VARCHAR2(500),
+    --Description VARCHAR2(500), this is too much data we cant store it
     LocStartLatitude NUMBER(12,5)
         CONSTRAINT chk_LocStartLatitude CHECK (LocStartLatitude BETWEEN -180 AND 180),
     LocStartLongitude NUMBER(12,5)
