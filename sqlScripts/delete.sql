@@ -1,7 +1,7 @@
 
-drop table AIRPORT;
-drop table LOCATION;
-drop table ROADCONDITION;
-drop table TIME;
-drop table WEATHER;
-drop table ACCIDENT;
+drop table MICHAELBENNIE.AIRPORT;
+drop table MICHAELBENNIE.LOCATION;
+drop table MICHAELBENNIE.ROADCONDITION;
+drop table MICHAELBENNIE.TIME;
+drop table MICHAELBENNIE.WEATHER;
+drop table MICHAELBENNIE.ACCIDENT;
