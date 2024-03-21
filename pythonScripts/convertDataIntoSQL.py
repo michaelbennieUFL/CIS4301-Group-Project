@@ -43,7 +43,7 @@ def generateAirportInserts(csv_file_path='../data/iata-icao.csv',
 
 
 def generateAccidentInserts(csv_file_path='../data/US_Accidents_March23.csv',
-                            output_directory_path='../sqlScripts/AccidentInserts', maxRowsPerFile=500000):
+                            output_directory_path='../sqlScripts/AccidentInserts', maxRowsPerFile=80000):
     readLineCount = 0
     fileIndex = 0
     output_file_path = f"{output_directory_path}/accident_inserts_{fileIndex}.sql"
