@@ -1,29 +1,45 @@
 import csv
+import os
 
 
-def generateAirportInserts(csv_file_path = '../data/iata-icao.csv', output_file_path = '../sqlScrips/generateAirportInserts.sql'):
-    with open(csv_file_path, mode='r') as csv_file, open(output_file_path, mode='w') as output_file:
-        # 创建一个csv阅读器对象
+def generateAirportInserts(csv_file_path='../data/iata-icao.csv',
+                           output_directory_path='../sqlScripts/AirportInserts', maxRowsPerFile=1000):
+    readLineCount = 0
+    fileIndex = 0
+    output_file_path = f"{output_directory_path}/airport_inserts_{fileIndex}.sql"
+
+    with open(csv_file_path, mode='r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
 
-        # 遍历CSV文件中的每一行
+        # Ensure the output directory exists
+        os.makedirs(output_directory_path, exist_ok=True)
+
+        output_file = open(output_file_path, mode='w')
+
         for row in csv_reader:
-            # 从行中提取各个字段
-            name = row['airport'].replace("'", "''")  # 处理名字中的单引号
+            name = row['airport'].replace("'", "''")
             latitude = row['latitude']
             longitude = row['longitude']
             iata_code = row['iata']
             icao_code = row['icao']
             if icao_code == '':
                 icao_code = 'N/A'
-            region_code = row['region_name'].replace("'", "''")  # 处理地区名中的单引号
+            region_code = row['region_name'].replace("'", "''")
 
-            # 创建INSERT命令
-            insert_command = f"INSERT INTO Airport (Name, Latitude, Longitude, IATACode, ICAOCode, RegionCode) VALUES ('{name}', {latitude}, {longitude}, '{iata_code}', '{icao_code}', '{region_code}');\n"
+            insert_command = f"INSERT INTO MICHAELBENNIE.Airport (Name, Latitude, Longitude, IATACode, ICAOCode, RegionCode) VALUES ('{name}', {latitude}, {longitude}, '{iata_code}', '{icao_code}', '{region_code}');\n"
 
-            # 将INSERT命令写入输出文件
             output_file.write(insert_command)
+            readLineCount += 1
 
+
+            #輸出那個文件
+            if readLineCount % maxRowsPerFile == 0 and readLineCount:
+                output_file.close()
+                fileIndex += 1
+                output_file_path = f"{output_directory_path}/airport_inserts_{fileIndex}.sql"
+                output_file = open(output_file_path, mode='w')
+
+        output_file.close()
 
 if __name__ == '__main__':
     generateAirportInserts()
