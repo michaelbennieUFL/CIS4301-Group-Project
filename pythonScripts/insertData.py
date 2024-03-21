@@ -6,11 +6,10 @@ import os
 
 # 数据库连接信息
 username = 'michaelbennie'
-password = 'GOxpdrdXBmxHTC0tfKflZZpB'  # 注意：在实际应用中最好使用环境变量或安全更好的方法来处理密码
+password = 'GOxpdrdXBmxHTC0tfKflZZpB'
 dsn = 'oracle.cise.ufl.edu:1521/orcl'
 
-# 定义一个函数来执行单个 SQL 脚本
-# 定义一个函数来执行单个 SQL 脚本
+
 def execute_sql_script(file_path):
     # 连接到数据库
     with oracledb.connect(user=username, password=password, dsn=dsn) as connection:
@@ -20,18 +19,18 @@ def execute_sql_script(file_path):
         with open(file_path, 'r', encoding='utf-8') as sql_file:
             sql_script = sql_file.readlines()
 
-        line_counter = 0  # 初始化行计数器
-        start_time = time.time()  # 获取开始时间
+        line_counter = 0  #
+        start_time = time.time()
 
         try:
             for line in sql_script:
                 line = line.strip().strip(';')
                 # 执行 SQL 脚本
-                if line:  # 确保不执行空行
+                if line:
                     cursor.execute(line)
                     line_counter += 1
                     if line_counter % 1000 == 0:
-                        elapsed_time = time.time() - start_time  # 计算经过的时间
+                        elapsed_time = time.time() - start_time
                         print(f"Executed 1000 lines in {elapsed_time:.2f} seconds")
                         start_time = time.time()  # 重置开始时间
             print(f"Successfully executed script: {file_path}")
@@ -42,10 +41,9 @@ def execute_sql_script(file_path):
 
 
 def insert_accident_data(dir_path):
-    # 获取所有 SQL 脚本的路径
     sql_scripts = [os.path.join(dir_path, f) for f in os.listdir(dir_path) if f.endswith('.sql')]
     # 使用 ThreadPoolExecutor 并行执行
-    with ThreadPoolExecutor(max_workers=50) as executor:
+    with ThreadPoolExecutor(max_workers=10) as executor:
         executor.map(execute_sql_script, sql_scripts)
     #execute_sql_script(sql_scripts[0])
 
