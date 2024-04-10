@@ -11,6 +11,7 @@ pw = 'GOxpdrdXBmxHTC0tfKflZZpB'  # 注意：在实际应用中最好使用环境
 
 
 def execute_sql_script(file_path):
+    results=[]
     # 连接到数据库
     with oracledb.connect(user=un, password=pw, dsn=cs) as connection:
         # 创建一个新的游标
@@ -29,17 +30,23 @@ def execute_sql_script(file_path):
                     continue
                 # 执行 SQL 脚本
                 if line:
+                    result = []
                     for a in cursor.execute(line):
-                        print(a)
-                    line_counter += 1
-                    if line_counter % 1000 == 0:
-                        elapsed_time = time.time() - start_time
-                        print(f"Executed 1000 lines in {elapsed_time:.2f} seconds")
-                        start_time = time.time()  # 重置开始时间
+                        result.append(a)
+                        line_counter += 1
+                        if line_counter % 100000 == 0:
+                            elapsed_time = time.time() - start_time
+                            print(f"Executed 100000 lines in {elapsed_time:.2f} seconds")
+                            start_time = time.time()  # 重置开始时间
+                            results.append(result) #this should be deleted later
+                            return results
             print(f"Successfully executed script: {file_path}")
+            results.append(result)
         except oracledb.DatabaseError as e:
             print(f"Error executing script {file_path}: {e}")
         finally:
             cursor.close()
+        return results
 
-execute_sql_script("../sqlScripts/checkTableContent.sql")
+
+print(execute_sql_script("../sqlScripts/selectAccidentData.sql"))
