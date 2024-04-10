@@ -171,3 +171,7 @@ cython_debug/
 
 #specific ones
 /data/US_Accidents_March23.csv
+/csvOutputs/
+/csvOutputs/Accident.csv
+/csvOutputs/Time.csv
+/csvOutputs/Weather.csv
