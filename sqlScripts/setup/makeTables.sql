@@ -27,15 +27,16 @@ CREATE TABLE Time (
 CREATE TABLE Weather (
     Temperature NUMBER(5,2)
         CONSTRAINT chk_Temperature CHECK (Temperature BETWEEN -90 AND 150),
-    WindSpeed NUMBER(5,2) NOT NULL,
     WeatherCondition VARCHAR2(100),
+    WindSpeed NUMBER(5,2)
+        CONSTRAINT chk_WindSpeed CHECK (WindSpeed BETWEEN 0 AND 400),
     Visibility NUMBER(3,1)
-        CONSTRAINT chk_Visibility CHECK (Visibility BETWEEN 0 AND 500),
+        CONSTRAINT chk_Visibility CHECK (Visibility BETWEEN 0 AND 100),
     WindDirection VARCHAR2(10),
     Humidity NUMBER(5,2)
         CONSTRAINT chk_Humidity CHECK (Humidity BETWEEN 1 AND 100),
     Pressure NUMBER(5,2)
-        CONSTRAINT chk_Pressure CHECK (Pressure BETWEEN 0 AND 80),
+        CONSTRAINT chk_Pressure CHECK (Pressure BETWEEN 20 AND 50),
     WindChill NUMBER(5,2)
         CONSTRAINT chk_WindChill CHECK (WindChill BETWEEN -110 AND 110),
     Precipitation NUMBER(5,2)
@@ -82,11 +83,9 @@ CREATE TABLE RoadCondition (
 
 
 CREATE TABLE Location (
-	AirportCode VARCHAR2(255),
 	Street VARCHAR2(255),
 	City VARCHAR2(255),
 	Zipcode VARCHAR2(255),
-	County VARCHAR2(255),
 	State VARCHAR2(255),
 	Country VARCHAR2(255),
 	StartLatitude NUMBER(12,5)

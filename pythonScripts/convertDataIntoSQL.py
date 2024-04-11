@@ -133,8 +133,89 @@ def generateWeatherCsv(csv_file_path='../data/US_Accidents_March23.csv',
                     })
 
 
+def generateRoadConditionCsv(csv_file_path='../data/US_Accidents_March23.csv',
+                        output_file_path='../csvOutputs/RoadCondition.csv'):
+    # 確保輸出目錄存在
+    output_directory_path = os.path.dirname(output_file_path)
+    os.makedirs(output_directory_path, exist_ok=True)
+
+    with open(csv_file_path, mode='r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        seen_locations = set()
+        number_of_lines = 0
+        number_of_repetitions = 0
+        with open(output_file_path, mode='w', newline='') as output_file:
+            fieldnames = ['Bump', 'Amenity', 'NoExit', 'TrafficSignal', 'Railway', 'TrafficCalming', 'GiveWay','TurningLoop',"Roundabout",'Crossing', 'Station','Stop',"Junction",'LocStartLatitude','LocStartLongitude']
+            csv_writer = csv.DictWriter(output_file, fieldnames=fieldnames)
+            csv_writer.writeheader()
+
+            for row in csv_reader:
+                number_of_lines+=1
+                location = (row['Start_Lat'],row['Start_Lng'])
+                # 檢查此條目是否為唯一
+                if location not in seen_locations:
+                    seen_locations.add(location)
+                    csv_writer.writerow({
+                        'Bump': row['Bump'],
+                        'Amenity': row['Amenity'],
+                        'NoExit': row['No_Exit'],
+                        'TrafficSignal': row['Traffic_Signal'],
+                        'Railway': row['Railway'],
+                        'TrafficCalming': row['Traffic_Calming'],
+                        'GiveWay': row['Give_Way'],
+                        'TurningLoop': row['Turning_Loop'],
+                        'Roundabout': row['Roundabout'],
+                        'Crossing': row['Crossing'],
+                        'Station': row['Station'],
+                        'Stop': row['Stop'],
+                        'Junction': row['Junction'],
+                        'LocStartLatitude': row['Start_Lat'],
+                        'LocStartLongitude': row['Start_Lng'],
+                    })
+                else:
+                    number_of_repetitions+=1
+        print("repition ratio: " + str(number_of_repetitions/number_of_lines))
+
+
+def generateLocationCsv(csv_file_path='../data/US_Accidents_March23.csv',
+                          output_file_path='../csvOutputs/Location.csv'):
+    # 確保輸出目錄存在
+    output_directory_path = os.path.dirname(output_file_path)
+    os.makedirs(output_directory_path, exist_ok=True)
+
+    with open(csv_file_path, mode='r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        seen_locations = set()
+
+        with open(output_file_path, mode='w', newline='') as output_file:
+            fieldnames = ['AirportCode', 'Street', 'City', 'Zipcode', 'County', 'State', 'Country',
+                          'StartLatitude', 'EndLatitude', 'StartLongitude', 'EndLongitude', 'AirportICAOCode']
+            csv_writer = csv.DictWriter(output_file, fieldnames=fieldnames)
+            csv_writer.writeheader()
+
+            for row in csv_reader:
+                # 使用起始和結束經緯度作為唯一標識符的一部分
+                location_key = (row['Start_Lat'], row['Start_Lng'], row['End_Lat'], row['End_Lng'])
+                if location_key not in seen_locations:
+                    seen_locations.add(location_key)
+                    csv_writer.writerow({
+                        'AirportCode': 'Unknown',
+                        'Street': row.get('Street', None),
+                        'City': row.get('City', None),
+                        'Zipcode': row.get('Zipcode', None),
+                        'County': row.get('County', None),
+                        'State': row.get('State', None),
+                        'StartLatitude': row['Start_Lat'],
+                        'EndLatitude': row['End_Lat'],
+                        'StartLongitude': row['Start_Lng'],
+                        'EndLongitude': row['End_Lng'],
+                        'AirportICAOCode': 'Unknown'  # 假設值，根據實際情況替換
+                    })
+
+
 if __name__ == '__main__':
     #generateAirportInserts()
     #generateAccidentCsv()
     #generateTimeCsv()
-    generateWeatherCsv()
+    #generateWeatherCsv()
+    generateRoadConditionCsv()
