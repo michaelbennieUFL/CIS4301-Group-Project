@@ -46,7 +46,6 @@ CREATE TABLE Weather (
 
 
 CREATE TABLE RoadCondition (
-    AccidentID VARCHAR2(50) NOT NULL,
     Bump NUMBER(1)
         CONSTRAINT chk_RoadCondition_Bump CHECK (Bump IN (0, 1)),
     Amenity NUMBER(1)
@@ -77,8 +76,7 @@ CREATE TABLE RoadCondition (
         CONSTRAINT chk_RoadCondition_LocStartLatitude CHECK (LocStartLatitude BETWEEN -180 AND 180) NOT NULL,
     LocStartLongitude NUMBER(12,5)
         CONSTRAINT chk_RoadCondition_LocStartLongitude CHECK (LocStartLongitude BETWEEN -180 AND 180) NOT NULL,
-    PRIMARY KEY (LocStartLatitude, LocStartLongitude),
-    FOREIGN KEY (AccidentID) REFERENCES Accident(ID)
+    PRIMARY KEY (LocStartLatitude, LocStartLongitude)
 );
 
 
