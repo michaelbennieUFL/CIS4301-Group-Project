@@ -110,7 +110,7 @@ def generateWeatherCsv(csv_file_path='../data/US_Accidents_March23.csv',
         seen_ids = set()
 
         with open(output_file_path, mode='w', newline='') as output_file:
-            fieldnames = ['Temperature', 'WindSpeed', 'WeatherCondition', 'Visibility', 'WindDirection', 'Humidity', 'Pressure', 'WindChill','Precipitation']
+            fieldnames = ['Temperature', 'WindSpeed', 'WeatherCondition', 'Visibility', 'WindDirection', 'Humidity', 'Pressure', 'WindChill','Precipitation',"AccidentID"]
             csv_writer = csv.DictWriter(output_file, fieldnames=fieldnames)
             csv_writer.writeheader()
 
@@ -128,7 +128,8 @@ def generateWeatherCsv(csv_file_path='../data/US_Accidents_March23.csv',
                         'Humidity': row['Humidity(%)'],
                         'Pressure': row['Pressure(in)'],
                         'WindChill': row['Wind_Chill(F)'],
-                        'Precipitation': row['Precipitation(in)']
+                        'Precipitation': row['Precipitation(in)'],
+                        "AccidentID": row["ID"]
                     })
 
 
