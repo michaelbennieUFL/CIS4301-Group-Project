@@ -1,16 +1,23 @@
+WITH date_ranges AS (--This Part should stay the same!!!
+    SELECT
+        (2000-2000)*12 + 1 AS start_period,
+        (2999-2000)*12 + 1 AS end_period
+    FROM dual
+)--This Part should stay the same!!!
 SELECT
-    EXTRACT(YEAR FROM STARTTIME) AS Year,
-    EXTRACT(MONTH FROM STARTTIME) AS Month,
-    AVG(SEVERITY) AS AverageSeverity
+    EXTRACT(YEAR FROM t.STARTTIME) AS Year,
+    EXTRACT(MONTH FROM t.STARTTIME) AS Month,
+    AVG(a.SEVERITY) AS AverageSeverity
 FROM
-    MICHAELBENNIE.ACCIDENT
+    MICHAELBENNIE.ACCIDENT a
 JOIN
-    MICHAELBENNIE.TIME
-ON
-    ACCIDENT.ID = TIME.ACCIDENTID
+    MICHAELBENNIE.TIME t ON a.ID = t.ACCIDENTID,
+    date_ranges dr
+WHERE
+    ((EXTRACT(YEAR FROM t.STARTTIME)-2000)*12 + EXTRACT(MONTH FROM t.STARTTIME)) BETWEEN dr.start_period AND dr.end_period
 GROUP BY
-    EXTRACT(YEAR FROM STARTTIME),
-    EXTRACT(MONTH FROM STARTTIME)
+    EXTRACT(YEAR FROM t.STARTTIME),
+    EXTRACT(MONTH FROM t.STARTTIME)
 ORDER BY
     Year,
     Month;
