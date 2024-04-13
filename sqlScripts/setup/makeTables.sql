@@ -26,24 +26,18 @@ CREATE TABLE Time (
 
 
 CREATE TABLE Weather (
-    Temperature NUMBER(5,2)
-        CONSTRAINT chk_Temperature CHECK (Temperature BETWEEN -90 AND 150),
+    Temperature NUMBER(5,2),
     WeatherCondition VARCHAR2(100),
-    WindSpeed NUMBER(5,2)
-        CONSTRAINT chk_WindSpeed CHECK (WindSpeed BETWEEN 0 AND 400),
-    Visibility NUMBER(3,1)
-        CONSTRAINT chk_Visibility CHECK (Visibility BETWEEN 0 AND 100),
+    WindSpeed NUMBER(5,2),
+    Visibility NUMBER(3,1),
     WindDirection VARCHAR2(10),
-    Humidity NUMBER(5,2)
-        CONSTRAINT chk_Humidity CHECK (Humidity BETWEEN 1 AND 100),
-    Pressure NUMBER(5,2)
-        CONSTRAINT chk_Pressure CHECK (Pressure BETWEEN 20 AND 50),
-    WindChill NUMBER(5,2)
-        CONSTRAINT chk_WindChill CHECK (WindChill BETWEEN -110 AND 110),
-    Precipitation NUMBER(5,2)
-        CONSTRAINT chk_Precipitation CHECK (Precipitation BETWEEN 0 AND 50),
+    Humidity NUMBER(5,2),
+    Pressure NUMBER(5,2),
+    WindChill NUMBER(5,2),
+    Precipitation NUMBER(5,2),
     AccidentID Number(8,0) NOT NULL
 );
+
 
 
 CREATE TABLE RoadCondition (
