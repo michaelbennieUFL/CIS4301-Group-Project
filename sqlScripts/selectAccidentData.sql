@@ -1,13 +1,14 @@
 WITH date_ranges AS (--This Part should stay the same!!!
     SELECT
         (2000-2000)*12 + 1 AS start_period,
-        (2999-2000)*12 + 1 AS end_period
+        (2017-2000)*12 + 1 AS end_period
     FROM dual
 )--This Part should stay the same!!!
 SELECT
     EXTRACT(YEAR FROM t.STARTTIME) AS Year,
     EXTRACT(MONTH FROM t.STARTTIME) AS Month,
-    AVG(a.SEVERITY) AS AverageSeverity
+    AVG(a.SEVERITY) AS AverageSeverity,
+    AVG(a.DISTANCEAFFECTED) AS DistanceAffected
 FROM
     MICHAELBENNIE.ACCIDENT a
 JOIN
