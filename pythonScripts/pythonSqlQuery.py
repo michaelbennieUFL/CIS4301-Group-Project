@@ -7,7 +7,7 @@ import oracledb
 # 数据库连接信息
 cs = oracledb.makedsn('oracle.cise.ufl.edu', '1521', service_name='orcl')
 un = 'michaelbennie'
-pw = 'GOxpdrdXBmxHTC0tfKflZZpB'  # 注意：在实际应用中最好使用环境变量或安全更好的方法来处理密码
+pw = 'GOxpdrdXBmxHTC0tfKflZZpB'  
 
 
 def execute_sql_script(file_path):
