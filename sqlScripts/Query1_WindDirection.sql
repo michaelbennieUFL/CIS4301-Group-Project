@@ -1,7 +1,7 @@
 WITH date_ranges AS (
     SELECT
         (2000-2000)*12 + 1 AS start_period,
-        (2022-2000)*12 + 1 AS end_period
+        (2019-2000)*12 + 1 AS end_period
     FROM dual
 )
 
