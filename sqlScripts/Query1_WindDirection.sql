@@ -4,7 +4,6 @@ WITH date_ranges AS (
         (2019-2000)*12 + 1 AS end_period
     FROM dual
 )
-
 SELECT
     EXTRACT(YEAR FROM STARTTIME) AS Year,
     EXTRACT(MONTH FROM STARTTIME) AS Month,
