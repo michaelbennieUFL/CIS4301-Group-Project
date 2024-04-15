@@ -84,18 +84,19 @@ def Query1SeverityPlot(data, labels=["line1", "line2", "line3"], title="Interact
 
     ax.set_xlabel('Date')
     ax.set_ylabel(y_label)
+    ax.set_ylim(bottom = 1)
     ax.set_title(title)
     ax.legend()
 
     # Slider for time range setup
     axcolor = 'lightgoldenrodyellow'
-    ax_slider = plt.axes([0.1, 0.1, 0.65, 0.03], facecolor=axcolor)
+    ax_slider = plt.axes([0.1, 0.1, 0.45, 0.03], facecolor=axcolor)
     all_dates = towards_dates + against_dates + perpendicular_dates
     all_dates.sort()
     #min_date = min(all_dates)
     #max_date = max(all_dates)
-    axmin = plt.axes([0.1, 0.1, 0.65, 0.03], facecolor=axcolor)
-    axmax = plt.axes([0.1, 0.15, 0.65, 0.03], facecolor=axcolor)
+    axmin = plt.axes([0.1, 0.1, 0.45, 0.03], facecolor=axcolor)
+    axmax = plt.axes([0.1, 0.15, 0.45, 0.03], facecolor=axcolor)
     slider_min = Slider(ax=axmin, label='Min Time', valmin=0, valmax=len(all_dates) - 1, valinit=0, valstep=1)
     slider_max = Slider(ax=axmax, label='Max Time', valmin=0, valmax=len(all_dates) - 1, valinit=len(all_dates) - 1, valstep=1)
     #slider = Slider(ax=ax_slider, label='Select Date Range', valmin=min_date, valmax=max_date, valinit=[min_date, max_date], valstep=np.timedelta64(1, 'D'))
@@ -129,7 +130,7 @@ def Query1SeverityPlot(data, labels=["line1", "line2", "line3"], title="Interact
 
     # Buttons for toggling line visibility
     for i, line in enumerate(lines):
-        btn_ax = plt.axes([0.76, 0.05 - i*0.05, 0.1, 0.04])
+        btn_ax = plt.axes([0, 0, 0, 0])
         #btn = Button(btn_ax, labels[i])
         #btn.on_clicked(lambda event, line=line: toggle_line_visibility(line))
 
@@ -140,7 +141,7 @@ def Query1SeverityPlot(data, labels=["line1", "line2", "line3"], title="Interact
         lines[index].set_visible(not lines[index].get_visible())
         plt.draw()
 
-    ax_check = plt.axes([0.9, 0.001, 0.2, 0.3])
+    ax_check = plt.axes([0.6, 0.001, 0.3, 0.3])
     plot_buttons = CheckButtons(ax_check, labels, line_visibility)
     plot_buttons.on_clicked(toggle_line_visibility)
 
@@ -182,13 +183,13 @@ def Query1CrashesPlot(data, labels=["line1", "line2", "line3"], title="Interacti
 
     # Slider for time range setup
     axcolor = 'lightgoldenrodyellow'
-    ax_slider = plt.axes([0.1, 0.1, 0.65, 0.03], facecolor=axcolor)
+    ax_slider = plt.axes([0.1, 0.1, 0.45, 0.03], facecolor=axcolor)
     all_dates = towards_dates + against_dates + perpendicular_dates
     all_dates.sort()
     #min_date = min(all_dates)
     #max_date = max(all_dates)
-    axmin = plt.axes([0.1, 0.1, 0.65, 0.03], facecolor=axcolor)
-    axmax = plt.axes([0.1, 0.15, 0.65, 0.03], facecolor=axcolor)
+    axmin = plt.axes([0.1, 0.1, 0.45, 0.03], facecolor=axcolor)
+    axmax = plt.axes([0.1, 0.15, 0.45, 0.03], facecolor=axcolor)
     slider_min = Slider(ax=axmin, label='Min Time', valmin=0, valmax=len(all_dates) - 1, valinit=0, valstep=1)
     slider_max = Slider(ax=axmax, label='Max Time', valmin=0, valmax=len(all_dates) - 1, valinit=len(all_dates) - 1, valstep=1)
     #slider = Slider(ax=ax_slider, label='Select Date Range', valmin=min_date, valmax=max_date, valinit=[min_date, max_date], valstep=np.timedelta64(1, 'D'))
@@ -222,9 +223,9 @@ def Query1CrashesPlot(data, labels=["line1", "line2", "line3"], title="Interacti
 
     # Buttons for toggling line visibility
     for i, line in enumerate(lines):
-        btn_ax = plt.axes([0.76, 0.05 - i*0.05, 0.1, 0.04])
-        btn = Button(btn_ax, labels[i])
-        btn.on_clicked(lambda event, line=line: toggle_line_visibility(line))
+        btn_ax = plt.axes([0, 0, 0, 0])
+        #btn = Button(btn_ax, labels[i])
+        #btn.on_clicked(lambda event, line=line: toggle_line_visibility(line))
 
     line_visibility = [True, True, True]  # Initialize line visibility status
 
@@ -233,7 +234,7 @@ def Query1CrashesPlot(data, labels=["line1", "line2", "line3"], title="Interacti
         lines[index].set_visible(not lines[index].get_visible())
         plt.draw()
 
-    ax_check = plt.axes([0.9, 0.001, 0.2, 0.3])
+    ax_check = plt.axes([0.6, 0.001, 0.3, 0.3])
     plot_buttons = CheckButtons(ax_check, labels, line_visibility)
     plot_buttons.on_clicked(toggle_line_visibility)
 
@@ -275,13 +276,13 @@ def Query1DistancePlot(data, labels=["line1", "line2", "line3"], title="Interact
 
     # Slider for time range setup
     axcolor = 'lightgoldenrodyellow'
-    ax_slider = plt.axes([0.1, 0.1, 0.65, 0.03], facecolor=axcolor)
+    ax_slider = plt.axes([0.1, 0.1, 0.45, 0.03], facecolor=axcolor)
     all_dates = towards_dates + against_dates + perpendicular_dates
     all_dates.sort()
     #min_date = min(all_dates)
     #max_date = max(all_dates)
-    axmin = plt.axes([0.1, 0.1, 0.65, 0.03], facecolor=axcolor)
-    axmax = plt.axes([0.1, 0.15, 0.65, 0.03], facecolor=axcolor)
+    axmin = plt.axes([0.1, 0.1, 0.45, 0.03], facecolor=axcolor)
+    axmax = plt.axes([0.1, 0.15, 0.45, 0.03], facecolor=axcolor)
     slider_min = Slider(ax=axmin, label='Min Time', valmin=0, valmax=len(all_dates) - 1, valinit=0, valstep=1)
     slider_max = Slider(ax=axmax, label='Max Time', valmin=0, valmax=len(all_dates) - 1, valinit=len(all_dates) - 1, valstep=1)
     #slider = Slider(ax=ax_slider, label='Select Date Range', valmin=min_date, valmax=max_date, valinit=[min_date, max_date], valstep=np.timedelta64(1, 'D'))
@@ -315,7 +316,7 @@ def Query1DistancePlot(data, labels=["line1", "line2", "line3"], title="Interact
 
     # Buttons for toggling line visibility
     for i, line in enumerate(lines):
-        btn_ax = plt.axes([0.76, 0.05 - i*0.05, 0.1, 0.04])
+        btn_ax = plt.axes([0, 0, 0, 0])
         #btn = Button(btn_ax, labels[i])
         #btn.on_clicked(lambda event, line=line: toggle_line_visibility(line))
 
@@ -326,7 +327,7 @@ def Query1DistancePlot(data, labels=["line1", "line2", "line3"], title="Interact
         lines[index].set_visible(not lines[index].get_visible())
         plt.draw()
 
-    ax_check = plt.axes([0.9, 0.001, 0.2, 0.3])
+    ax_check = plt.axes([0.6, 0.001, 0.3, 0.3])
     plot_buttons = CheckButtons(ax_check, labels, line_visibility)
     plot_buttons.on_clicked(toggle_line_visibility)
 
