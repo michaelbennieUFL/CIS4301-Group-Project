@@ -71,8 +71,7 @@ def execute_sql_script(file_path):
                             elapsed_time = time.time() - start_time
                             print(f"Executed 100000 lines in {elapsed_time:.2f} seconds")
                             start_time = time.time()  # 重置开始时间
-                            results.append(result) #this should be deleted later
-                            return results
+                    results.append(result) #this should be deleted later
             print(f"Successfully executed script: {file_path}")
             results.append(result)
         except oracledb.DatabaseError as e:
