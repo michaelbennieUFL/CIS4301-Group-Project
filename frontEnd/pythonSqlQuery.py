@@ -81,4 +81,4 @@ def execute_sql_script(file_path):
         return results
 
 if __name__ == '__main__':
-    print(execute_sql_script("../sqlScripts/selectAccidentData.sql"))
+    print(execute_sql_script("../sqlScripts/Query4_TrafficFeatures.sql"))
