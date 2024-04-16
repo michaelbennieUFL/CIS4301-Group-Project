@@ -1,7 +1,7 @@
 WITH date_ranges AS (
     SELECT
         (2000-2000)*12 + 1 AS start_period,
-        (2019-2000)*12 + 1 AS end_period
+        (2020-2000)*12 + 1 AS end_period
     FROM dual
 )
 SELECT
@@ -86,7 +86,7 @@ FROM
         FROM
             MICHAELBENNIE.ACCIDENT a
         JOIN
-            MICHAELBENNIE.WEATHER w ON a.ID = w.AccidentID
+            "H.ZENG".WEATHER w ON a.ID = w.AccidentID
         JOIN
             MICHAELBENNIE.TIME T ON w.ACCIDENTID = T.ACCIDENTID,
             date_ranges dr
