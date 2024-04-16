@@ -136,10 +136,19 @@ CREATE TABLE RoadCondition (
         CONSTRAINT chk_RoadCondition_LocStartLongitude CHECK (LocStartLongitude BETWEEN -180 AND 180) NOT NULL
 );
 
-
-
-
-
+-- Patrick's one single table:
+CREATE TABLE USCities (
+	City VARCHAR2(100),
+    StateID VARCHAR2(2),
+	Latitude NUMBER(10,5)
+        	CONSTRAINT chk_Latitude CHECK (Latitude BETWEEN -90 AND 90),
+    Longitude NUMBER(10,5)
+        	CONSTRAINT chk_Longitude CHECK (Longitude BETWEEN -180 AND 180),
+	Density NUMBER(6,1)
+            CONSTRAINT chk_Density CHECK (Density >= 0),
+    ID INT,
+	CONSTRAINT pk_ID PRIMARY KEY (ID)
+);
 
 
 -- allow other users to interacct with these tables
@@ -160,3 +169,13 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON RoadCondition TO "P.KEEFE";
 GRANT SELECT, INSERT, UPDATE, DELETE ON RoadCondition TO "LOGAN.FERNANDEZ";
 GRANT SELECT, INSERT, UPDATE, DELETE ON RoadCondition TO "H.ZENG";
 GRANT SELECT, INSERT, UPDATE, DELETE ON RoadCondition TO "JOSEPH.FLEMING";
+
+
+-- -私ませんUS CITIES食べます
+GRANT SELECT, INSERT, UPDATE, DELETE ON USCities TO MICHAELBENNIE;
+GRANT SELECT, INSERT, UPDATE, DELETE ON USCities TO "P.KEEFE";
+GRANT SELECT, INSERT, UPDATE, DELETE ON USCities TO "LOGAN.FERNANDEZ";
+GRANT SELECT, INSERT, UPDATE, DELETE ON USCities TO "H.ZENG";
+GRANT SELECT, INSERT, UPDATE, DELETE ON USCities TO "JOSEPH.FLEMING";
+
+
