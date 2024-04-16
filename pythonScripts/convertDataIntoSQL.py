@@ -47,39 +47,39 @@ def generateAirportInserts(csv_file_path='../data/iata-icao.csv',
 
 def generateAccidentCsv(csv_file_path='../data/US_Accidents_March23.csv',
                         output_file_path='../csvOutputs/Accident.csv',
-                        include_ratio=(3, 5)):  # include_percent參數控制包括的行比例
+                        include_ratio=(3, 5)):  # include_ratio parameter controls the proportion of rows included
     with open(csv_file_path, mode='r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
 
-        # 確保輸出目錄存在
+        # Ensure the output directory exists
         output_directory_path = os.path.dirname(output_file_path)
         os.makedirs(output_directory_path, exist_ok=True)
 
         with open(output_file_path, mode='w', newline='') as output_file:
             csv_writer = csv.writer(output_file)
 
-            # 寫入列名稱
+            # Write the column names
             csv_writer.writerow(
                 ['ID', 'Severity', 'DistanceAffected', 'LocStartLatitude', 'LocStartLongitude', 'EndLatitude',
                  'EndLongitude'])
 
             row_counter = 0
             for row in csv_reader:
-                # 根據指定的百分比跳過行
+                # Skip rows based on the specified ratio
                 if row_counter % include_ratio[1] >= include_ratio[1] - include_ratio[0]:
                     ID = row['ID'][2:]
                     Severity = row['Severity']
                     Distance = row['Distance(mi)']
-                    Start_Lat = row['Start_Lat']
-                    Start_Lng = row['Start_Lng']
-                    End_Lat = row['End_Lat']
-                    End_Lng = row['End_Lng']
 
-                    # 寫入數據行
+                    # Check for empty strings and set to None if found, otherwise convert to float and round
+                    Start_Lat = round(float(row['Start_Lat']), 5) if row['Start_Lat'] else None
+                    Start_Lng = round(float(row['Start_Lng']), 5) if row['Start_Lng'] else None
+                    End_Lat = round(float(row['End_Lat']), 5) if row['End_Lat'] else None
+                    End_Lng = round(float(row['End_Lng']), 5) if row['End_Lng'] else None
+
+                    # Write the data row
                     csv_writer.writerow([ID, Severity, Distance, Start_Lat, Start_Lng, End_Lat, End_Lng])
                 row_counter += 1
-
-
 def generateTimeCsv(csv_file_path='../data/US_Accidents_March23.csv',
                     output_file_path='../csvOutputs/Time.csv',
                     include_ratio=(3, 5)):
@@ -155,7 +155,7 @@ def generateWeatherCsv(csv_file_path='../data/US_Accidents_March23.csv',
 def generateRoadConditionCsv(csv_file_path='../data/US_Accidents_March23.csv',
                              output_file_path='../csvOutputs/RoadCondition.csv',
                              include_ratio=(3, 5)):
-    # 確保輸出目錄存在
+    # Ensure the output directory exists
     output_directory_path = os.path.dirname(output_file_path)
     os.makedirs(output_directory_path, exist_ok=True)
 
@@ -164,6 +164,7 @@ def generateRoadConditionCsv(csv_file_path='../data/US_Accidents_March23.csv',
         seen_locations = set()
         row_counter = 0
         number_of_repetitions = 0
+
         with open(output_file_path, mode='w', newline='') as output_file:
             fieldnames = ['Bump', 'Amenity', 'NoExit', 'TrafficSignal', 'Railway', 'TrafficCalming', 'GiveWay',
                           'TurningLoop', "Roundabout", 'Crossing', 'Station', 'Stop', "Junction", 'LocStartLatitude',
@@ -173,8 +174,9 @@ def generateRoadConditionCsv(csv_file_path='../data/US_Accidents_March23.csv',
 
             for row in csv_reader:
                 if row_counter % include_ratio[1] >= include_ratio[1] - include_ratio[0]:
-                    location = (row['Start_Lat'], row['Start_Lng'])
-                    # 檢查此條目是否為唯一
+                    location = (round(float(row['Start_Lat']), 5) if row['Start_Lat'] else None,
+                                round(float(row['Start_Lng']), 5) if row['Start_Lng'] else None)
+                    # Check if this entry is unique
                     if location not in seen_locations:
                         seen_locations.add(location)
                         csv_writer.writerow({
@@ -191,14 +193,13 @@ def generateRoadConditionCsv(csv_file_path='../data/US_Accidents_March23.csv',
                             'Station': (row['Station'] == "True") * 1,
                             'Stop': (row['Stop'] == "True") * 1,
                             'Junction': (row['Junction'] == "True") * 1,
-                            'LocStartLatitude': row['Start_Lat'],
-                            'LocStartLongitude': row['Start_Lng'],
+                            'LocStartLatitude': location[0],
+                            'LocStartLongitude': location[1],
                         })
                     else:
                         number_of_repetitions += 1
                 row_counter += 1
-        print("repition ratio: " + str(number_of_repetitions / row_counter))
-
+        print("repetition ratio: " + str(number_of_repetitions / row_counter))
 
 def generateLocationCsv(csv_file_path='../data/US_Accidents_March23.csv',
                         output_file_path='../csvOutputs/Location.csv',
@@ -220,7 +221,8 @@ def generateLocationCsv(csv_file_path='../data/US_Accidents_March23.csv',
             number_of_repetitions = 0
             for row in csv_reader:
                 # 使用起始和結束經緯度作為唯一標識符的一部分
-                location_key = (row['Start_Lat'], row['Start_Lng'])
+                location_key = (round(float(row['Start_Lat']), 5) if row['Start_Lat'] else None,
+                                round(float(row['Start_Lng']), 5) if row['Start_Lng'] else None)
                 if row_counter % include_ratio[1] >= include_ratio[1] - include_ratio[0]:
                     if location_key not in seen_locations:
                         seen_locations.add(location_key)
@@ -229,8 +231,8 @@ def generateLocationCsv(csv_file_path='../data/US_Accidents_March23.csv',
                             'City': row.get('City', None),
                             'Zipcode': row.get('Zipcode', None),
                             'State': row.get('State', None),
-                            'StartLatitude': row['Start_Lat'],
-                            'StartLongitude': row['Start_Lng'],
+                            'StartLatitude': location_key[0],
+                            'StartLongitude': location_key[1],
                             'AirportICAOCode': row['Airport_Code']  # 假設值，根據實際情況替換
                         })
                     else:
@@ -241,8 +243,8 @@ def generateLocationCsv(csv_file_path='../data/US_Accidents_March23.csv',
 
 if __name__ == '__main__':
     #generateAirportInserts()
-    generateAccidentCsv()
-    generateTimeCsv()
-    generateWeatherCsv()
+    #generateAccidentCsv()
+    # generateTimeCsv()
+    # generateWeatherCsv()
     generateRoadConditionCsv()
     generateLocationCsv()
