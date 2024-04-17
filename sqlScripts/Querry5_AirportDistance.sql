@@ -54,10 +54,9 @@ CASE
 END AS DistanceRange,
     A.SEVERITY,
     A.DISTANCEAFFECTED,
-    T.STARTTIME as STARTTIME
+    ft.STARTTIME as STARTTIME
 FROM filtered_time ft
 INNER JOIN michaelbennie.accident a ON ft.ACCIDENTID = a.ID
-INNER JOIN MICHAELBENNIE.TIME T on A.ID = T.ACCIDENTID
 INNER JOIN MICHAELBENNIE.Location L ON A.LocStartLatitude = L.StartLatitude AND A.LocStartLongitude = L.StartLongitude
 INNER JOIN MICHAELBENNIE.Airport AP ON L.AirportICAOCode = AP.ICAOCode)
 GROUP BY
