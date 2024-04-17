@@ -10,7 +10,6 @@ ALTER TABLE "H.ZENG".ROADCONDITION ADD CONSTRAINT pk_RoadCondition PRIMARY KEY (
 CREATE INDEX idx_LocStartLatitude ON "H.ZENG".ROADCONDITION (LocStartLatitude);
 CREATE INDEX idx_LocStartLongitude ON "H.ZENG".ROADCONDITION (LocStartLongitude);
 
-
 --add constraint for Weather
 ALTER TABLE "H.ZENG".WEATHER ADD CONSTRAINT pk_Weather PRIMARY KEY (AccidentID);
 DELETE FROM "H.ZENG".Weather
@@ -29,10 +28,21 @@ WHERE WindChill < -110 OR WindChill > 110;
 ALTER TABLE "H.ZENG".Weather ADD CONSTRAINT chk_WindChill CHECK (WindChill BETWEEN -110 AND 110);
 ALTER TABLE "H.ZENG".Weather ADD CONSTRAINT chk_Precipitation CHECK (Precipitation BETWEEN 0 AND 50);
 
+--add constraints for US Cities
+ALTER TABLE "P.KEEFE".USCITIES ADD CONSTRAINT chk_Latitude CHECK (Latitude BETWEEN -90 AND 90);
+ALTER TABLE "P.KEEFE".USCITIES ADD CONSTRAINT chk_Longitude CHECK (Longitude BETWEEN -90 AND 90);
+ALTER TABLE "P.KEEFE".USCITIES ADD CONSTRAINT pk_ID PRIMARY KEY (ID);
+
+-- add foreign key constraint for US Cities
+-- ALTER TABLE "P.KEEFE".USCITIES ADD CONSTRAINT fk_City FOREIGN KEY (City) REFERENCES MICHAELBENNIE.Location(City);
 
 --Add Indices for faster lookup
 CREATE INDEX idx_Accident_LocStartLatitude ON MICHAELBENNIE.ACCIDENT (LocStartLatitude);
 CREATE INDEX idx_Accident_LocStartLongitude ON MICHAELBENNIE.ACCIDENT (LocStartLongitude);
+
+-Wait! Me too!
+CREATE INDEX idx_USCities_City ON "P.KEEFE".USCities (City);
+CREATE INDEX idx_USCities_StateID ON "P.KEEFE".USCities (StateID);
 
 
 
