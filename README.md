@@ -16,4 +16,6 @@ To run the front-end:
 
 4. Run `pip install voila`, `pip install ipywidgets`, and `pip install plotly` to be able to use Viola to run the local web server and display the graphs.
 
-5. Once everything is installed, run `viola frontEnd/hello-world.ipynb` to run and host the Jupyter Notebook application.
+5. Once everything is installed, run `viola frontEnd` to run and host the Jupyter Notebook application.
+
+6. After running the Jupyter Notebook application, click on `website.ipynb` to begin navigating the home page and various queries!
